@@ -1,27 +1,24 @@
 let p = [];
 let originalP = [];
 let o = [];
-const nbrPtn = 5;
+const nbrPtn = 15;
 const vitesseAffichage = 20;
 const bord = 20;
-const rayon = 10;
-
-let iter = 0;
+const rayon = 20;
 
 function setup() {
   createCanvas(750, 550);
-  textSize(20);
-  // p[0] = new Point();
-  // for (let i = 1; i < nbrPtn; i++) {
-  //   let newPoint = new Point();
-  //   if (!overlay(newPoint, p)) {
-  //     p[i] = newPoint;
-  //   }
-  //   originalP.push(i);
-  // }
-  for (let i = 0; i < nbrPtn; i++) {
-    p[i] = new Point();
-    originalP.push(i);
+  textSize(rayon);
+  let nP = 1;
+  p[0] = new Point();
+  originalP.push(nP);
+  while (nP < nbrPtn) {
+    let newPoint = new Point();
+    if (!overlay(newPoint, p)) {
+      p.push(newPoint);
+      originalP.push(nP);
+      nP++;
+    }
   }
   o = [...p];
 }
@@ -32,21 +29,16 @@ function draw() {
   for (let i = 0; i < p.length; i++) {
     p[i].affichage();
     noStroke();
-    text(i + 1, o[i].x + 10, o[i].y + 10);
+    fill("red");
+    text(i + 1, o[i].x + rayon / 2, o[i].y + rayon);
   }
 
   for (let i = 0; i < p.length - 1; i++) {
     stroke(0);
-    strokeWeight(2);
+    strokeWeight(rayon / 5);
     line(p[i].x, p[i].y, p[i + 1].x, p[i + 1].y);
   }
-  
-  if (iter == 0) {
-   // saveCanvas();
-  }
-  
-  iter = 1;
-  
+
   comparaison();
 }
 
@@ -111,15 +103,15 @@ function adjacencyMatrix(arr) {
 }
 
 
-// function overlay(obj, list) {
-//   const minDistBetweenVertices = rayon * 3;
-//   for (let i = 0; i < list.length; i++) {
-//     if (dist(obj.x, obj.y, list[i].x, list[i].y) <= minDistBetweenVertices) {
-//       return true;
-//     }
-//   }
-//   return false;
-// }
+function overlay(obj, list) {
+  const minDistBetweenVertices = rayon * 3;
+  for (let i = 0; i < list.length; i++) {
+    if (dist(obj.x, obj.y, list[i].x, list[i].y) <= minDistBetweenVertices) {
+      return true;
+    }
+  }
+  return false;
+}
 
 class Point {
   constructor() {
