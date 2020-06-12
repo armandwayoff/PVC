@@ -1,8 +1,14 @@
 # Travelling-Salesman-Problem
 
+## Converting Non-Planar Graph to Planar
+
+* What's a [Planar graph](https://en.wikipedia.org/wiki/Planar_graph) ?
+
+This algorithm is a sub-algorithm that can be implemented in a more general algorithm for solving the travelling salesman problem.
+
 ## Nearest Neighbour Algorithm
 
-[Nearest neighbour algorithm - Wikipedia](https://en.wikipedia.org/wiki/Nearest_neighbour_algorithm)
+* What's the [Nearest neighbour algorithm](https://en.wikipedia.org/wiki/Nearest_neighbour_algorithm) ?
 
 Example of implementation of the algorithm for 15 vertices generated randomly.
 
