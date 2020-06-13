@@ -6,6 +6,6 @@ class Point {
 
   affichage() {
     fill(0);
-    circle(this.x, this.y, 10);
+    circle(this.x, this.y, rayon);
   }
 }
