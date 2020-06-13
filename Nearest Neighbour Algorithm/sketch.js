@@ -1,8 +1,9 @@
 let p = [];
 let i_suppr = [];
 
-let nombre_points = 150;
-let rayon = 2;
+let nombre_points = 15;
+let bord = 20;
+let rayon = 10;
 let espacement = rayon;
 
 let i_encours = 0;
@@ -14,13 +15,14 @@ let vitesseAffichage = 1;
 function setup() {
   createCanvas(600, 600);
   background(255);
-  strokeWeight(rayon);
-  textSize(rayon);
+  strokeWeight(rayon / 4);
+  textSize(rayon * 2);
 
   for (let i = 0; i < nombre_points; i++) {
     p[i] = new Point();
     p[i].affichage();
-    //text(i + 1, p[i].x + espacement, p[i].y + espacement);
+    fill("red");
+    text(i + 1, p[i].x + espacement, p[i].y + espacement);
     print((i + 1) + " : (" + p[i].x + " ; " + p[i].y + ")");
   }
 }
