@@ -18,21 +18,23 @@ function setup() {
 }
 
 function draw() {
-  while (visited_vertices.length < vertices.length) {
-    let record_distance = Infinity;
-    let nearest_vertex;
-    for (let i = 0; i < vertices.length; i++) {
-      if (!visited_vertices.includes(i)) {
-        let d = dist(vertices[i].x, vertices[i].y, vertices[current_vertex].x, vertices[current_vertex].y);
-        if (d < record_distance) {
-          nearest_vertex = i;
-          record_distance = d;
-        }
+  let record_distance = Infinity;
+  let nearest_vertex;
+  for (let i = 0; i < vertices.length; i++) {
+    if (!visited_vertices.includes(i)) {
+      let d = dist(vertices[i].x, vertices[i].y, vertices[current_vertex].x, vertices[current_vertex].y);
+      if (d < record_distance) {
+        nearest_vertex = i;
+        record_distance = d;
       }
     }
-    line(vertices[nearest_vertex].x, vertices[nearest_vertex].y, vertices[current_vertex].x, vertices[current_vertex].y);
-    visited_vertices.push(nearest_vertex);
-    current_vertex = nearest_vertex;
+  }
+  line(vertices[nearest_vertex].x, vertices[nearest_vertex].y, vertices[current_vertex].x, vertices[current_vertex].y);
+  visited_vertices.push(nearest_vertex);
+  current_vertex = nearest_vertex;
+  
+  if (visited_vertices.length == vertices.length) {
+    noLoop();
   }
 }
 
