@@ -1,59 +1,49 @@
-let p = [];
-let i_suppr = [];
+const NUMBER_VERTICES = 100;
+const RAD = 5
 
-let nombre_points = 15;
-let bord = 20;
-let rayon = 10;
-let espacement = rayon;
-
-let i_encours = 0;
-
-let distanceTotale = 0;
-
-let vitesseAffichage = 1;
+let vertices = [];
+let visited_vertices = [0]; // By default, the graph starts with the first vertex
+let current_vertex = 0;
 
 function setup() {
-  createCanvas(600, 600);
+  createCanvas(windowWidth, windowHeight);
   background(255);
-  strokeWeight(rayon / 4);
-  textSize(rayon * 2);
-
-  for (let i = 0; i < nombre_points; i++) {
-    p[i] = new Point();
-    p[i].affichage();
-    fill("red");
-    text(i + 1, p[i].x + espacement, p[i].y + espacement);
-    print((i + 1) + " : (" + p[i].x + " ; " + p[i].y + ")");
+  strokeWeight(RAD / 2);
+  textSize(RAD * 2);
+  for (let i = 0; i < NUMBER_VERTICES; i++) {
+    vertices[i] = new Vertex(random(width), random(height));
+    vertices[i].display();
+    text(i, vertices[i].x + RAD * 2, vertices[i].y + RAD * 2);
   }
 }
 
 function draw() {
-  if (frameCount % vitesseAffichage == 0) {
-    calculDistanceMinimale();
-  }
-  if(i_suppr.length == p.length - 1) {
-    print("Distance totale : " + distanceTotale);
-    noLoop();
+  while (visited_vertices.length < vertices.length) {
+    let record_distance = Infinity;
+    let nearest_vertex;
+    for (let i = 0; i < vertices.length; i++) {
+      if (!visited_vertices.includes(i)) {
+        let d = dist(vertices[i].x, vertices[i].y, vertices[current_vertex].x, vertices[current_vertex].y);
+        if (d < record_distance) {
+          nearest_vertex = i;
+          record_distance = d;
+        }
+      }
+    }
+    line(vertices[nearest_vertex].x, vertices[nearest_vertex].y, vertices[current_vertex].x, vertices[current_vertex].y);
+    visited_vertices.push(nearest_vertex);
+    current_vertex = nearest_vertex;
   }
 }
 
-function calculDistanceMinimale() {
-  let distances = [];
-
-  for (let i = 1; i < p.length; i++) {
-    if (!i_suppr.includes(i)) {
-      let d = dist(p[i_encours].x, p[i_encours].y, p[i].x, p[i].y);
-      distances.push(d);
-    }
+class Vertex {
+  constructor(x_, y_) {
+    this.x = x_;
+    this.y = y_;
   }
 
-  for (let i = 1; i < p.length; i++) {
-    if (dist(p[i_encours].x, p[i_encours].y, p[i].x, p[i].y) == min(distances)) {
-      distanceTotale += min(distances);
-      line(p[i_encours].x, p[i_encours].y, p[i].x, p[i].y);
-      i_encours = i;
-      i_suppr.push(i_encours);
-      break;
-    }
+  display() {
+    fill(0);
+    circle(this.x, this.y, RAD * 2);
   }
 }
