@@ -1,4 +1,11 @@
-# Travelling-Salesman-Problem
+# Travelling Salesman Problem
+
+My Work on the Travelling Salesman Problem
+
+## Table of Contents
+
+* [Converting Non-Planar Graph to Planar](#converting-non-planar-graph-to-planar)
+* [Nearest Neighbour Algorithm](#nearest-neighbour-algorithm)
 
 ## Converting Non-Planar Graph to Planar
 
