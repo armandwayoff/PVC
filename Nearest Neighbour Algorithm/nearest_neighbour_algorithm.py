@@ -1,0 +1,40 @@
+from math import sqrt
+from random import randint
+
+
+class Vertex:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+
+def dist(x1, y1, x2, y2):
+    return sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
+
+
+number_vertices = 5
+width = height = 50  # dimension
+
+vertices = []
+visited_vertices = [0]  # by default, the graph starts with the first vertex
+current_vertex = 0
+path = [0]
+
+print("Vertices coordinates :")
+for i in range(number_vertices):
+    vertices.append(Vertex(randint(0, width), randint(0, height)))
+    print(i, ": (", vertices[i].x, ";", vertices[i].y, ")")
+
+while len(visited_vertices) < len(vertices):
+    record_distance = max(width, height) ** 2
+    for i in range(len(vertices)):
+        if i not in visited_vertices:
+            d = dist(vertices[i].x, vertices[i].y, vertices[current_vertex].x, vertices[current_vertex].y)
+            if d < record_distance:
+                nearest_vertex = i
+                record_distance = d
+    visited_vertices.append(nearest_vertex)
+    path.append(nearest_vertex)
+    current_vertex = nearest_vertex
+
+print("Path :", path)
