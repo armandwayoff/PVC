@@ -37,4 +37,10 @@ while len(visited_vertices) < len(vertices):
     path.append(nearest_vertex)
     current_vertex = nearest_vertex
 
-print("Path :", path)
+print("Adjacency matrix :")
+adjacency_matrix = [[0 for col in range(number_vertices)] for row in range(number_vertices)]
+for i in range(number_vertices - 1):
+    adjacency_matrix[path[i]][path[i + 1]] = 1
+    adjacency_matrix[path[i + 1]][path[i]] = 1
+for row in adjacency_matrix:
+    print(row)
