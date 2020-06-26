@@ -12,8 +12,8 @@ def dist(x1, y1, x2, y2):
     return sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
 
 
-number_vertices = 5
-width = height = 50  # dimension
+number_vertices = 20
+width = height = 50  # dimension of the canvas
 
 vertices = []
 visited_vertices = [0]  # by default, the graph starts with the first vertex
@@ -23,9 +23,10 @@ path = [0]
 print("Vertices coordinates :")
 for i in range(number_vertices):
     vertices.append(Vertex(randint(0, width), randint(0, height)))
-    print(i, ": (", vertices[i].x, ";", vertices[i].y, ")")
+    print(i, ": (" + str(vertices[i].x), ";", str(vertices[i].y) + ")")
 
 while len(visited_vertices) < len(vertices):
+    global nearest_vertex
     record_distance = max(width, height) ** 2
     for i in range(len(vertices)):
         if i not in visited_vertices:
@@ -37,6 +38,7 @@ while len(visited_vertices) < len(vertices):
     path.append(nearest_vertex)
     current_vertex = nearest_vertex
 
+print("Path :", path)
 print("Adjacency matrix :")
 adjacency_matrix = [[0 for col in range(number_vertices)] for row in range(number_vertices)]
 for i in range(number_vertices - 1):
