@@ -26,7 +26,7 @@ Both versions generate a certain numbers of random vertices and then determine t
 
 The Python version prints the coordinates of all the vertices, the path and the adjacency matrix. You can find an example [below](#output-example).
 
-The purpose of the Javascript version is to visualise the algorithm. The Javascript version is programmed with the [p5.js library](https://p5js.org/). This library is ideal because it has a full set of drawing functionality.
+The purpose of the JavaScript version is to visualise the algorithm. The Javascript version is programmed with the [p5.js library](https://p5js.org/). This library is ideal because it has a full set of drawing functionality.
 
 ### Output Example
 
@@ -60,6 +60,6 @@ Adjacency matrix :
 
 ### Visualisation of the Algorithm
 
-Example of implementation of the algorithm for 15 vertices generated randomly.
+Example of implementation of the algorithm for ```15``` vertices generated randomly.
 
 ![NN1](illustration_images/NN1.png)
