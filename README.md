@@ -19,6 +19,15 @@ This algorithm is a sub-algorithm that can be implemented in a more general algo
 
 * What's the [Nearest neighbour algorithm](https://en.wikipedia.org/wiki/Nearest_neighbour_algorithm) ?
 
+The nearest neighbor algorithm quickly yields a short tour, but usually not the optimal one. Therefor, it is not at all an optimal solution to the travelling salesman problem but can be used as an initialisation path.
+
+The "Nearest Neighbor Algorithm" folder contains two versions, one in Python and one in JavaScript.
+Both versions generate a certain numbers of random vertices and then determine the path. 
+
+The Python version prints the coordinates of all the vertices, the path and the adjacency matrix. You can find an example [below](#output-example).
+
+The purpose of the Javascript version is to visualise the algorithm. The Javascript version is programmed with the [p5.js library](https://p5js.org/). This library is ideal because it has a full set of drawing functionality.
+
 ### Output Example
 
 Here is an output example with ```10``` vertices:
