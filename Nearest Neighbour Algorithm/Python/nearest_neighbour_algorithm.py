@@ -12,8 +12,8 @@ def dist(x1, y1, x2, y2):
     return sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
 
 
-number_vertices = 20
-width = height = 50  # dimension of the canvas
+number_vertices = 10
+width = height = 10  # dimension of the canvas
 
 vertices = []
 visited_vertices = [0]  # by default, the graph starts with the first vertex
@@ -27,7 +27,8 @@ for i in range(number_vertices):
 
 while len(visited_vertices) < len(vertices):
     global nearest_vertex
-    record_distance = max(width, height) ** 2
+    record_distance = dist(0, 0, width, height)
+    print(record_distance)
     for i in range(len(vertices)):
         if i not in visited_vertices:
             d = dist(vertices[i].x, vertices[i].y, vertices[current_vertex].x, vertices[current_vertex].y)
