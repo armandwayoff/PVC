@@ -6,6 +6,8 @@ My Work on the Travelling Salesman Problem
 
 * [Converting Non-Planar Graph to Planar](#converting-non-planar-graph-to-planar)
 * [Nearest Neighbour Algorithm](#nearest-neighbour-algorithm)
+  * [Output Example](#output-example)
+  * [Visualisation of the Algorithm](#visualisation-of-the-algorithm)
 
 ## Converting Non-Planar Graph to Planar
 
@@ -16,12 +18,6 @@ This algorithm is a sub-algorithm that can be implemented in a more general algo
 ## Nearest Neighbour Algorithm
 
 * What's the [Nearest neighbour algorithm](https://en.wikipedia.org/wiki/Nearest_neighbour_algorithm) ?
-
-Example of implementation of the algorithm for 15 vertices generated randomly.
-
-> By default, the algorithm starts with the first vertex.
-
-![NN1](illustration_images/NN1.png)
 
 ### Output Example
 
@@ -52,3 +48,9 @@ Adjacency matrix :
 [0, 1, 0, 0, 1, 0, 0, 0, 0, 0]
 [1, 0, 0, 0, 0, 0, 0, 1, 0, 0]
 ```
+
+### Visualisation of the Algorithm
+
+Example of implementation of the algorithm for 15 vertices generated randomly.
+
+![NN1](illustration_images/NN1.png)
