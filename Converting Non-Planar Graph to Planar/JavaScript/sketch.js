@@ -1,36 +1,46 @@
 let p = [];
-let originalP = [];
 let o = [];
-const nbrPtn = 15;
+const nbrPtn = 20;
 const vitesseAffichage = 20;
 const bord = 20;
 const rayon = 20;
 
 function setup() {
-  createCanvas(750, 550);
+  createCanvas(windowWidth, windowHeight);
   textSize(rayon);
-  let nP = 1;
-  p[0] = new Point();
-  originalP.push(nP);
-  while (nP < nbrPtn) {
-    let newPoint = new Point();
-    if (!overlay(newPoint, p)) {
-      p.push(newPoint);
-      originalP.push(nP);
-      nP++;
-    }
+  for (let i = 0; i < nbrPtn; i++) {
+    p[i] = new Point();
   }
   o = [...p];
 }
 
 function draw() {
   background(255);
+  let nbrInter = 0;
+
+  if (frameCount % vitesseAffichage == 0) {
+    for (let i = 0; i < p.length - 2; i++) {
+      for (let j = i + 2; j < p.length - 1; j++) {
+        if (i !== j && (i + 1) !== j) {
+          let inter = intersection(p[i], p[i + 1], p[j], p[j + 1]);
+          if (inter) {
+            [p[i + 1], p[j]] = [p[j], p[i + 1]];
+            nbrInter++;
+          }
+        }
+      }
+    }
+    if (nbrInter == 0) {
+      print("Done");
+      noLoop();
+    }
+  }
 
   for (let i = 0; i < p.length; i++) {
     p[i].affichage();
     noStroke();
     fill("red");
-    text(i + 1, o[i].x + rayon / 2, o[i].y + rayon);
+    text(i, o[i].x + rayon / 2, o[i].y + rayon);
   }
 
   for (let i = 0; i < p.length - 1; i++) {
@@ -39,78 +49,17 @@ function draw() {
     line(p[i].x, p[i].y, p[i + 1].x, p[i + 1].y);
   }
 
-  comparaison();
 }
 
-function comparaison() {
-  let nbrInter = 0;
-
-  if (frameCount % vitesseAffichage == 0) {
-    for (let i = 0; i < p.length - 2; i++) {
-      for (let j = i + 2; j < p.length - 1; j++) {
-        if (i !== j && (i + 1) !== j) {
-          let inter = intersection(p[i].x, p[i].y, p[i + 1].x, p[i + 1].y, p[j].x, p[j].y, p[j + 1].x, p[j + 1].y);
-          if (inter) {
-            swap(p, i + 1, j);
-            swap(originalP, i + 1, j);
-            nbrInter++;
-          }
-        }
-      }
-    }
-    if (nbrInter == 0) {
-      adjacencyMatrix(originalP);
-      noLoop();
-    }
-  }
-}
-
-function swap(a, i, j) {
-  let copie = a[i];
-  a[i] = a[j];
-  a[j] = copie;
-}
-
-function intersection(a, b, c, d, p, q, r, s) {
-  var det, gamma, lambda;
-  det = (c - a) * (s - q) - (r - p) * (d - b);
-  if (det === 0) {
-    return false;
+function intersection(p1, p2, q1, q2) {
+  let det = (p2.x - p1.x) * (q2.y - q1.y) - (q2.x - q1.x) * (p2.y - p1.y);
+  if (det == 0) {
+    return false
   } else {
-    lambda = ((s - q) * (r - a) + (p - r) * (s - b)) / det;
-    gamma = ((b - d) * (r - a) + (c - a) * (s - b)) / det;
+    let lambda = ((q2.y - q1.y) * (q2.x - p1.x) + (q1.x - q2.x) * (q2.y - p1.y)) / det;
+    let gamma = ((p1.y - p2.y) * (q2.x - p1.x) + (p2.x - p1.x) * (q2.y - p1.y)) / det;
     return (0 < lambda && lambda < 1) && (0 < gamma && gamma < 1);
   }
-}
-
-function adjacencyMatrix(arr) {
-  let matrix = [];
-  for (let i = 0; i < arr.length; i++) {
-    matrix.push([]);
-    for (let j = 0; j < arr.length; j++) {
-      matrix[i].push(0);
-    }
-  }
-
-  for (let i = 0; i < arr.length - 1; i++) {
-    matrix[arr[i]][arr[i + 1]] = 1;
-    matrix[arr[i + 1]][arr[i]] = 1;
-  }
-
-  for (let i = 0; i < arr.length; i++) {
-    print(matrix[i]);
-  }
-}
-
-
-function overlay(obj, list) {
-  const minDistBetweenVertices = rayon * 3;
-  for (let i = 0; i < list.length; i++) {
-    if (dist(obj.x, obj.y, list[i].x, list[i].y) <= minDistBetweenVertices) {
-      return true;
-    }
-  }
-  return false;
 }
 
 class Point {
