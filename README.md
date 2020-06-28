@@ -1,6 +1,6 @@
-# Travelling Salesman Problem
+![repository_title](illustration_images/repository_title.png)
 
-My Work on the Travelling Salesman Problem
+My work on the travelling salesman problem
 
 ## Table of Contents
 
