@@ -11,13 +11,15 @@ My Work on the Travelling Salesman Problem
 
 ## Converting Non-Planar Graph to Planar
 
-* What's a [Planar graph](https://en.wikipedia.org/wiki/Planar_graph) ?
+* What's a [planar graph](https://en.wikipedia.org/wiki/Planar_graph) ?
 
 This algorithm is a sub-algorithm that can be implemented in a more general algorithm for solving the travelling salesman problem.
 
+The principle of the algortihm is very simple: the program detects every intersection in the graph and swaps the two vertices causing the intersection. 
+
 ## Nearest Neighbour Algorithm
 
-* What's the [Nearest neighbour algorithm](https://en.wikipedia.org/wiki/Nearest_neighbour_algorithm) ?
+* What's the [nearest neighbour algorithm](https://en.wikipedia.org/wiki/Nearest_neighbour_algorithm) ?
 
 The nearest neighbor algorithm quickly yields a short tour, but usually not the optimal one. Therefor, it is not at all an optimal solution to the travelling salesman problem but can be used as an initialisation path.
 
