@@ -101,6 +101,6 @@ Adjacency matrix :
 
 ### Visualisation of the Algorithm
 
-Example of implementation of the algorithm for ```15``` vertices generated randomly.
+This graph represents the example above.
 
-![NN1](illustration_images/NN1.png)
+![NN1](illustration_images/NNA-visualisation-example.png)
