@@ -1,5 +1,5 @@
-const NUMBER_VERTICES = 100;
-const RAD = 5;
+const NUMBER_VERTICES = 10;
+const RAD = 10;
 
 let vertices = [];
 let visited_vertices = [0]; // By default, the graph starts with the first vertex
@@ -13,6 +13,7 @@ function setup() {
   for (let i = 0; i < NUMBER_VERTICES; i++) {
     vertices[i] = new Vertex();
     vertices[i].display();
+    fill("red");
     text(i, vertices[i].x + RAD * 2, vertices[i].y + RAD * 2);
   }
 }
