@@ -17,15 +17,16 @@ def intersection(p1, p2, q1, q2):
         return (0 < lamb < 1) and (0 < gamma < 1)
 
 
-number_vertices = 10
-width = height = 100  # dimension of the canvas
+NUMBER_VERTICES = 10
+WIDTH = HEIGHT = 100  # dimensions of the canvas
 
 vertices = []
 path = []
-
+print("* Converting Non-Planar Graph to Planar *")
+print("Number of vertices :", NUMBER_VERTICES, "| Dimensions of the canvas : (" + str(WIDTH), ";", str(HEIGHT) + ")\n")
 print("Vertices coordinates :")
-for i in range(number_vertices):
-    vertices.append(Vertex(randint(0, width), randint(0, height)))
+for i in range(NUMBER_VERTICES):
+    vertices.append(Vertex(randint(0, WIDTH), randint(0, HEIGHT)))
     print(i, ": (" + str(vertices[i].x), ";", str(vertices[i].y) + ")")
     path.append(i)  # the vertices are initially linked in their order of generation
 
@@ -43,8 +44,8 @@ while number_intersections > 0:
 
 print("Path :", path)
 print("Adjacency matrix :")
-adjacency_matrix = [[0 for col in range(number_vertices)] for row in range(number_vertices)]
-for i in range(number_vertices - 1):
+adjacency_matrix = [[0 for col in range(NUMBER_VERTICES)] for row in range(NUMBER_VERTICES)]
+for i in range(NUMBER_VERTICES - 1):
     adjacency_matrix[path[i]][path[i + 1]] = 1
     adjacency_matrix[path[i + 1]][path[i]] = 1
 for row in adjacency_matrix:
