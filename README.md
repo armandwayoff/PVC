@@ -68,32 +68,33 @@ The purpose of the JavaScript version is to visualise the algorithm. The Javascr
 
 ### Output Example
 
-Here is an output example with ```10``` vertices:
-
 ```
+* Nearest Neighbour Algorithm *
+Number of vertices : 10 | Dimensions of the canvas : (100 ; 100)
+
 Vertices coordinates :
-0 : (83 ; 70)
-1 : (34 ; 98)
-2 : (54 ; 58)
-3 : (83 ; 38)
-4 : (23 ; 96)
-5 : (86 ; 23)
-6 : (20 ; 39)
-7 : (80 ; 11)
-8 : (98 ; 86)
-9 : (87 ; 11)
-Path : [0, 8, 3, 5, 9, 7, 2, 6, 4, 1]
+0 : (82 ; 6)
+1 : (19 ; 53)
+2 : (54 ; 67)
+3 : (20 ; 52)
+4 : (11 ; 91)
+5 : (52 ; 94)
+6 : (3 ; 17)
+7 : (28 ; 8)
+8 : (75 ; 28)
+9 : (87 ; 62)
+Path : [0, 8, 9, 2, 5, 4, 1, 3, 6, 7]
 Adjacency matrix :
 0 0 0 0 0 0 0 0 1 0
-0 0 0 0 1 0 0 0 0 0
-0 0 0 0 0 0 1 1 0 0
-0 0 0 0 0 1 0 0 1 0
+0 0 0 1 1 0 0 0 0 0
+0 0 0 0 0 1 0 0 0 1
 0 1 0 0 0 0 1 0 0 0
-0 0 0 1 0 0 0 0 0 1
+0 1 0 0 0 1 0 0 0 0
 0 0 1 0 1 0 0 0 0 0
-0 0 1 0 0 0 0 0 0 1
-1 0 0 1 0 0 0 0 0 0
-0 0 0 0 0 1 0 1 0 0
+0 0 0 1 0 0 0 1 0 0
+0 0 0 0 0 0 1 0 0 0
+1 0 0 0 0 0 0 0 0 1
+0 0 1 0 0 0 0 0 1 0
 ```
 
 ### Visualisation of the Algorithm
