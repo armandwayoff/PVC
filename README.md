@@ -1,6 +1,8 @@
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/armandwayoff/Travelling-Salesman-Problem/blob/master/LICENSE)
+
 ![repository_title](illustration_images/repository_title.png)
 
-My work on the travelling salesman problem
+<p align="center">My Work on the Travelling Salesman Problem</p>
 
 ## Table of Contents
 
