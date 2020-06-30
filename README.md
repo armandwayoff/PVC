@@ -7,20 +7,13 @@
 ## Table of Contents
 
 * [Converting Non-Planar Graph to Planar](#converting-non-planar-graph-to-planar)
-  * [Output Example](#output-example)
 * [Nearest Neighbour Algorithm](#nearest-neighbour-algorithm)
-  * [Output Example](#output-example)
-  * [Visualisation of the Algorithm](#visualisation-of-the-algorithm)
 
 ## Converting Non-Planar Graph to Planar
 
 * What's a [planar graph](https://en.wikipedia.org/wiki/Planar_graph) ?
 
 This algorithm is a sub-algorithm that can be implemented in a more general algorithm for solving the travelling salesman problem.
-
-The principle of the algortihm is very simple, the program detects every intersection in the graph and swaps the two vertices causing the intersection :
-
-![repository_title](illustration_images/schematic.png)
 
 The "Converting Non-Planar Graph to Planar" folder contains two versions, one in Python and one in JavaScript. Both versions generate a certain numbers of random vertices and then determine the path.
 
