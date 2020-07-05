@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+import networkx as nx
 from math import sqrt
 from random import randint
 
@@ -12,19 +14,26 @@ def dist(x1, y1, x2, y2):
     return sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
 
 
-NUMBER_VERTICES = 10
+NUMBER_VERTICES = 100
 WIDTH = HEIGHT = 100  # dimension of the canvas
+VERTEX_SIZE = 150
 
 vertices = []
 visited_vertices = [0]  # by default, the graph starts with the first vertex
 path = [0]
 current_vertex = 0
 
+adjacency_matrix = [[0 for col in range(NUMBER_VERTICES)] for row in range(NUMBER_VERTICES)]
+
+G = nx.Graph()
+
 print("* Nearest Neighbour Algorithm *")
 print("Number of vertices :", NUMBER_VERTICES, "| Dimensions of the canvas : (" + str(WIDTH), ";", str(HEIGHT) + ")\n")
 print("Vertices coordinates :")
 for i in range(NUMBER_VERTICES):
-    vertices.append(Vertex(randint(0, WIDTH), randint(0, HEIGHT)))
+    new_vertex = Vertex(randint(0, WIDTH), randint(0, HEIGHT))
+    vertices.append(new_vertex)
+    G.add_node(i, pos=(new_vertex.x, new_vertex.y))
     print(i, ": (" + str(vertices[i].x), ";", str(vertices[i].y) + ")")
 
 while len(visited_vertices) < len(vertices):
@@ -36,16 +45,19 @@ while len(visited_vertices) < len(vertices):
             if d < record_distance:
                 nearest_vertex = i
                 record_distance = d
+    G.add_edge(nearest_vertex, current_vertex)
     visited_vertices.append(nearest_vertex)
     path.append(nearest_vertex)
     current_vertex = nearest_vertex
 
 print("Path :", path)
 print("Adjacency matrix :")
-adjacency_matrix = [[0 for col in range(NUMBER_VERTICES)] for row in range(NUMBER_VERTICES)]
 for i in range(NUMBER_VERTICES - 1):
     adjacency_matrix[path[i]][path[i + 1]] = 1
     adjacency_matrix[path[i + 1]][path[i]] = 1
 for row in adjacency_matrix:
     print(*row)
-    
+
+pos = nx.get_node_attributes(G, 'pos')
+nx.draw(G, pos, node_size=VERTEX_SIZE, node_color='orange', with_labels=True)
+plt.show()
