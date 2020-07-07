@@ -95,6 +95,7 @@ Adjacency matrix :
 1 0 0 0 0 0 0 0 0 1
 0 0 1 0 0 0 0 0 1 0
 ```
+![NNNA_graph](illustration_images/NNA_output_example.png)
 
 ### Visualisation of the Algorithm
 
