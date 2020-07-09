@@ -28,6 +28,8 @@ VERTEX_SIZE = 150
 
 vertices = []
 
+adjacency_matrix = [[0 for col in range(NUMBER_VERTICES)] for row in range(NUMBER_VERTICES)]
+
 G = nx.Graph()
 
 print("* Brute Force Algorithm *")
@@ -47,10 +49,16 @@ for o in list(orders):
         record_distance = totalDist(o)
         record_path = o
 
+print("Shortest Path :", record_path)
+
 for v in range(len(record_path) - 1):
     G.add_edge(record_path[v], record_path[v + 1])
+    adjacency_matrix[record_path[v]][record_path[v + 1]] = 1
+    adjacency_matrix[record_path[v + 1]][record_path[v]] = 1
 
-print("Shortest Path :", record_path)
+print("Adjacency matrix :")
+for row in adjacency_matrix:
+    print(*row)
 
 pos = nx.get_node_attributes(G, 'pos')
 nx.draw(G, pos, node_size=VERTEX_SIZE, node_color='orange', with_labels=True)
