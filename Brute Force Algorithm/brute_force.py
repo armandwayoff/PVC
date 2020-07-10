@@ -22,7 +22,7 @@ def totalDist(lst):
     return d
 
 
-NUMBER_VERTICES = 6
+NUMBER_VERTICES = 6  # should not exceed 9
 WIDTH = HEIGHT = 100  # dimension of the canvas
 VERTEX_SIZE = 150
 
