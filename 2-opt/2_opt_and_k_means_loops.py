@@ -1,8 +1,8 @@
-import matplotlib.pyplot as plt
-import networkx as nx
 from random import randint, sample
 from math import sqrt
-
+import matplotlib.pyplot as plt
+import networkx as nx
+import time
 
 class Vertex:
     def __init__(self, x, y):
@@ -19,6 +19,7 @@ class Centroid:
 def dist(x1, y1, x2, y2):
     return sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
 
+# cluster's functions
 
 def create_clusters(reference_elements, elements_to_organise):
     global target_index
@@ -44,6 +45,7 @@ def centroid_of(lst):
         yG += lst[a].y / len(lst)
     return Centroid(xG, yG)
 
+# graph's functions
 
 def total_distance(lst):
     d = 0
@@ -57,9 +59,9 @@ def reverse_sublist(lst, start, end):
     return lst
 
 
-NUMBER_VERTICES = 20
-NUMBER_CLUSTERS = 1
-NUMBER_ITERATIONS = 10 ** 5
+NUMBER_VERTICES = 50
+NUMBER_CLUSTERS = 5
+NUMBER_ITERATIONS = 10 ** 4
 WIDTH = HEIGHT = 100  # dimension of the canvas
 VERTEX_SIZE = 150
 COLORS = ['orange', 'red', 'purple', 'green', 'black', 'grey', 'pink', 'cyan']
@@ -72,6 +74,7 @@ print("Number of vertices :", NUMBER_VERTICES,
       "| Number of clusters :", NUMBER_CLUSTERS,
       "| Dimensions of the canvas : (" + str(WIDTH), ";", str(HEIGHT) + ")\n")
 
+start_time = time.time()
 # creation of the vertices
 # print("Vertices coordinates :")
 for i in range(NUMBER_VERTICES):
@@ -83,7 +86,6 @@ pos = nx.get_node_attributes(G, 'pos')
 
 # initialisation
 initial_vertices = sample(vertices, NUMBER_CLUSTERS)
-
 clusters, node_color = create_clusters(initial_vertices, vertices)
 
 # clusters
@@ -102,29 +104,28 @@ while previous_state != current_state:
     iteration += 1
 print("Clusters : done")
 # --------------------------------------------------------------
+print("--- %s seconds ---" % (time.time() - start_time))
 
 # graphs
 # --------------------------------------------------------------
 for cluster in clusters:
     path = [vertices.index(vertex) for vertex in cluster]  # initial path
     path.append(path[0])  # creation of the loop
-    selection = path[1:-1]
-    print("Initial Path:", path)
-    print("Selection : ", selection)
     record_distance = dist(0, 0, WIDTH, HEIGHT) * NUMBER_VERTICES
     for i in range(NUMBER_ITERATIONS):
-        selected_vertices = sample(selection, 2)
+        selected_vertices = sample(range(1, len(path) - 1), 2)
         test = path.copy()
         test = reverse_sublist(test, selected_vertices[0], selected_vertices[1])
         test_distance = total_distance(test)
         if test_distance < record_distance:
             record_distance = test_distance
             path = test
-    print(clusters.index(cluster), ":", path)
     for i in range(len(cluster)):
         G.add_edge(path[i], path[i + 1])
 print("Tours : done")
 # --------------------------------------------------------------
+
+print("--- %s seconds ---" % (time.time() - start_time))
 
 plt.figure(str(NUMBER_CLUSTERS) + "-means | Iteration " + str(iteration))
 nx.draw(G, pos, node_size=VERTEX_SIZE, node_color=node_color, with_labels=True)
