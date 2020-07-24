@@ -22,7 +22,7 @@ def total_distance(lst):
 
 
 def reverse_sublist(lst, start, end):
-    lst[start:end] = lst[start:end][::-1]
+    lst[start:end + 1] = lst[start:end + 1][::-1]
     return lst
 
 
@@ -47,7 +47,7 @@ path.append(0)
 # a = []
 record_distance = dist(0, 0, WIDTH, HEIGHT) * NUMBER_VERTICES
 for i in range(NUMBER_ITERATIONS):
-    selected_vertices = sample(range(1, NUMBER_VERTICES + 1), 2)
+    selected_vertices = sample(range(1, NUMBER_VERTICES), 2)
     test = path.copy()
     test = reverse_sublist(test, selected_vertices[0], selected_vertices[1])
     test_distance = total_distance(test)
