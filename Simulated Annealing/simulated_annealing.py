@@ -1,4 +1,4 @@
-# Thanks to this video https://www.youtube.com/watch?v=35fzyblVdmA&t=578s
+# Thanks to this video https://www.youtube.com/watch?v=35fzyblVdmA
 
 import matplotlib.pyplot as plt
 import networkx as nx
