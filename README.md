@@ -2,9 +2,7 @@
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/armandwayoff/Travelling-Salesman-Problem/blob/master/LICENSE)
 
-[![readme_title](readme_title.png)](https://github.com/armandwayoff/Networks)
-
-<p align="center">My Work on Networks</p>
+# Travelling Salesman Problem
 
 ## Table of Contents
 
