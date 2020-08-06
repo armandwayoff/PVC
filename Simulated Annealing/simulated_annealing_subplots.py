@@ -29,11 +29,11 @@ def reverse_sublist(lst, start, end):
     return lst
 
 
-NUMBER_VERTICES = 30
-WIDTH = HEIGHT = 10  # dimension of the canvas
+NUMBER_VERTICES = 20
+WIDTH = HEIGHT = 1  # dimension of the canvas
 NUMBER_ITERATIONS = 10 ** 3
 NUMBER_ITERATIONS_PER_CHAIN = 500
-VERTEX_SIZE = 150
+VERTEX_SIZE = 120
 
 INITIAL_TEMP = 50
 ALPHA = 0.99
@@ -41,8 +41,10 @@ T = INITIAL_TEMP
 
 vertices = []
 path = []
-temps = []
+
+temperatures = []
 distances = []
+
 G = nx.Graph()
 
 for i in range(NUMBER_VERTICES):
@@ -56,7 +58,7 @@ start_time = time.time()
 
 record_distance = dist(0, 0, WIDTH, HEIGHT) * NUMBER_VERTICES
 for _ in range(NUMBER_ITERATIONS):
-    temps.append(T)
+    temperatures.append(T)
     T *= ALPHA
     for _ in range(NUMBER_ITERATIONS_PER_CHAIN):
         selected_vertices = sample(range(1, NUMBER_VERTICES), 2)
@@ -67,10 +69,10 @@ for _ in range(NUMBER_ITERATIONS):
             record_distance = test_distance
             path = test
         else:
-            x = uniform(0, 1)
-            if x < exp((record_distance - test_distance) / T):
+            r = uniform(0, 1)
+            if r < exp((record_distance - test_distance) / T):
                 record_distance = test_distance
-    distances.append(exp((record_distance - test_distance) / T))
+    distances.append(record_distance)
 
 print("--- %s seconds ---" % (time.time() - start_time))
 
@@ -79,13 +81,12 @@ for i in range(NUMBER_VERTICES):
 
 plt.subplot(212)
 pos = nx.get_node_attributes(G, 'pos')
-nx.draw(G, pos, node_size=VERTEX_SIZE, node_color='orange', with_labels=True)
+nx.draw(G, pos, node_size=VERTEX_SIZE, node_color='blue', edge_color='cyan', width=3)
 plt.title("Path")
-plt.subplot(222)
-plt.plot(range(len(temps)), temps)
-plt.title("Temperature")
 plt.subplot(221)
-plt.scatter(range(len(distances)), distances, s=.5)
-plt.title("Acceptance Probability")
-
+plt.plot(range(len(temperatures)), temperatures)
+plt.title("Temperature")
+plt.subplot(222)
+plt.plot(range(len(distances)), distances)
+plt.title("Total Length")
 plt.show()
