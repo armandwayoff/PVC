@@ -30,20 +30,19 @@ def reverse_sublist(lst, start, end):
     return lst
 
 
-NUMBER_VERTICES = 10
+NUMBER_VERTICES = 15
+X = [uniform(0, 10) for _ in range(NUMBER_VERTICES)]
+Y = [uniform(0, 10) for _ in range(NUMBER_VERTICES)]
 NUM_MARKOV_CHAINS = 10 ** 3
 LENGTH_MARKOV_CHAINS = 500
 ALPHA = .99
 
 temperature = 50
 vertices = []
-path = []
 
 for i in range(NUMBER_VERTICES):
-    new_vertex = Vertex(uniform(0, 10), uniform(0, 10))
+    new_vertex = Vertex(X[i], Y[i])
     vertices.append(new_vertex)
-    path.append(new_vertex)
-path.append(vertices[0])
 
 # Plot
 fig = plt.figure()
@@ -52,6 +51,12 @@ ax2 = fig.add_subplot(122)
 ax2.title.set_text("Simulated Annealing")
 
 # 2-opt
+# initial path
+path = []
+for i in range(NUMBER_VERTICES):
+    path.append(vertices[i])
+path.append(vertices[0])
+
 record_distance = total_distance(path)
 for _ in range(NUM_MARKOV_CHAINS * LENGTH_MARKOV_CHAINS):
     selected_vertices = sample(range(1, NUMBER_VERTICES + 1), 2)
@@ -68,6 +73,12 @@ for vertex in vertices:
     ax1.plot(vertex.x, vertex.y, 'bo')
 
 # Simulated Annealing
+# initial path
+path = []
+for i in range(NUMBER_VERTICES):
+    path.append(vertices[i])
+path.append(vertices[0])
+
 record_distance = total_distance(path)
 for _ in range(NUM_MARKOV_CHAINS):
     temperature *= ALPHA
