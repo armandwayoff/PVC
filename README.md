@@ -4,4 +4,6 @@
 
 # Travelling Salesman Problem
 
+[What's the travelling salesman problem ?](https://en.wikipedia.org/wiki/Travelling_salesman_problem)
+
 ## Table of Contents
