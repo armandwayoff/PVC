@@ -1,4 +1,4 @@
-## Nearest Neighbour Algorithm
+# Nearest Neighbour Algorithm
 
 * What's the [nearest neighbour algorithm](https://en.wikipedia.org/wiki/Nearest_neighbour_algorithm) ?
 
@@ -11,7 +11,7 @@ The Python version prints the coordinates of all the vertices, the path and the 
 
 The purpose of the JavaScript version is to visualise the algorithm. The Javascript version is programmed with the [p5.js library](https://p5js.org/). This library is ideal because it has a full set of drawing functionality.
 
-### Output Example
+## Output Example
 
 ```
 * Nearest Neighbour Algorithm *
