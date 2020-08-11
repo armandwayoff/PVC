@@ -8,7 +8,6 @@ def simulated_annealing(population,
                         number_of_markov_chains, 
                         length_of_markov_chains, 
                         loop=True):
-                        
     def dist(v1, v2):
         return sqrt((v1.x - v2.x) ** 2 + (v1.y - v2.y) ** 2)
 
