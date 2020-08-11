@@ -1,8 +1,7 @@
 from math import *
 
 
-def nearest_neighbour(population, starting_vertex):
-    
+def nearest_neighbour(population, starting_vertex):  
     def dist(v1, v2):
         return sqrt((v1.x - v2.x) ** 2 + (v1.y - v2.y) ** 2)
 
