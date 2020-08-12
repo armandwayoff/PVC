@@ -20,6 +20,8 @@
 
 The aim of this project is to present the problem of the commercial traveller as well as different resolution algorithms. 
 
+![what's tsp](illustration_images/what's_tsp.png)
+
 ## Algorithms
 
 The ```Algorithms``` folder contains one folder per algorithm. Each folder contains a file named ```[algorithm name]_function.py``` and a file named ```[algorithm name]_visualization.py```.
