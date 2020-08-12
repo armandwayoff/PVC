@@ -3,7 +3,7 @@ from itertools import permutations
 import sys
 
 
-def brute_force_search(population):
+def brute_force_search(population, loop=True):
     def dist(v1, v2):
         return sqrt((v1.x - v2.x) ** 2 + (v1.y - v2.y) ** 2)
 
@@ -14,7 +14,12 @@ def brute_force_search(population):
         return d
 
     if len(population) <= 9:
-        paths = permutations(population)
+        if loop:
+            paths = []
+            for p in list(permutations(population[1:])):
+                paths.append((population[0],) + p + (population[0],))
+        else:
+            paths = permutations(population)
         record_distance = float('inf')
         global record_path
         for path in list(paths):
