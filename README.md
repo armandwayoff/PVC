@@ -26,4 +26,4 @@ The ```Algorithms``` folder contains one folder per algorithm. Each folder conta
 
 ## License
 
-Distributed under the MIT License. See ```LICENSE``` for more information.
+Distributed under the MIT License. See [```LICENSE```](https://github.com/armandwayoff/Travelling-Salesman-Problem/blob/master/LICENSE) for more information.
