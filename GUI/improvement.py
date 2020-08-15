@@ -13,12 +13,15 @@ new_plot = fig.add_subplot(111)
 
 
 def new_random_plot():
-    x = [uniform(0, 10) for _ in range(50)]
-    y = [uniform(0, 10) for _ in range(50)]
+    x = [randint(0, 10) for _ in range(25)]
+    y = [randint(0, 10) for _ in range(25)]
+    new_plot.clear()
     new_plot.scatter(x, y, c="black")
-    canvas = FigureCanvasTkAgg(fig, master=root)
-    canvas.draw()
-    canvas.get_tk_widget().pack(side=LEFT, fill=BOTH, expand=TRUE)
+
+
+canvas = FigureCanvasTkAgg(fig, master=root)
+canvas.draw()
+canvas.get_tk_widget().pack(side=LEFT, fill=BOTH, expand=TRUE)
 
 
 label_frame = LabelFrame(root, text="Parameters", width=300, height=800).pack(side=RIGHT, expand='no', fill='y')
