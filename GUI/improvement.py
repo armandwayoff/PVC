@@ -24,7 +24,8 @@ def new_random_plot():
     canvas.get_tk_widget().pack(side=LEFT, fill=BOTH, expand=TRUE)
 
 
-label_frame = LabelFrame(root, text="Parameters", width=300, height=800).pack(side=RIGHT, expand='no', fill='y')
-button = Button(label_frame, text="NEW", command=new_random_plot).pack()
+parameters_frame = LabelFrame(root, text="Parameters", width=300, height=800, bg='white')
+parameters_frame.pack(side=RIGHT, expand=0, fill=Y)
+new_random_plot_button = Button(parameters_frame, text="New random plot", command=new_random_plot).pack()
 
 root.mainloop()
