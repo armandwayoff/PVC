@@ -29,16 +29,24 @@ n = 10
 
 
 def import_data():
-    def open():
+    def open_files():
         root.filename = filedialog.askopenfilename()
-        import_data_page_label = Label(import_data_page, text="Selected file : " + str(root.filename)).pack()
-        quit_button = Button(import_data_page, text="OK", relief=GROOVE, command=import_data_page.destroy).pack()
+        import_data_page_button.config(text="Select new file")
+        import_data_page_label.config(text="Selected file : " + str(root.filename))
+        quit_button.config(text="OK")
+    # Create pop-up window
     import_data_page = Toplevel(root)
     import_data_page.attributes("-topmost", "true")
     import_data_page.geometry("300x80")
-    import_data_page.resizable(False, False)
+    import_data_page.resizable(True, False)
     import_data_page.title("Import data")
-    import_data_page_button = Button(import_data_page, text="Select file", command=open, relief=GROOVE).pack()
+
+    import_data_page_button = Button(import_data_page, text="Select file", command=open_files, relief=GROOVE)
+    import_data_page_button.pack()
+    import_data_page_label = Label(import_data_page, text="")
+    import_data_page_label.pack()
+    quit_button = Button(import_data_page, text="Cancel", relief=GROOVE, command=import_data_page.destroy)
+    quit_button.pack()
 
 
 def new_random_data():
@@ -74,23 +82,17 @@ parameters_frame = LabelFrame(root, width=300, height=800, bg=MAIN_BG_COL)
 parameters_frame.pack(side=RIGHT, expand=0, fill=Y)
 
 # Data
-data_label = Label(parameters_frame, text="Data", bg=MAIN_BG_COL).grid(row=0, column=0)
+data_label = Label(parameters_frame, text="Data", bg=MAIN_BG_COL)
+data_label.grid(row=0, column=0)
 
-
-import_data_button = Button(parameters_frame, text="Import data", relief=GROOVE, command=import_data).grid(row=1,
-                                                                       column=0,
-                                                                       columnspan=2,
-                                                                       padx=10,
-                                                                       pady=10)
-new_random_plot_button = Button(parameters_frame, text="New random data", relief=GROOVE, command=new_random_data).grid(row=2,
-                                                                                                        column=0,
-                                                                                                        columnspan=2,
-                                                                                                        padx=10,
-                                                                                                        pady=10)
+import_data_button = Button(parameters_frame, text="Import data", relief=GROOVE, command=import_data)
+import_data_button.grid(row=1, column=0, columnspan=2, padx=10, pady=10)
+new_random_plot_button = Button(parameters_frame, text="New random data", relief=GROOVE, command=new_random_data)
+new_random_plot_button.grid(row=2, column=0, columnspan=2, padx=10, pady=10)
 
 # Initialization algorithms
-initialization_algorithms_label = Label(parameters_frame, text="Initialization algorithm :", bg=MAIN_BG_COL).grid(row=3,
-                                                                                                              column=0)
+initialization_algorithms_label = Label(parameters_frame, text="Initialization algorithm :", bg=MAIN_BG_COL)
+initialization_algorithms_label.grid(row=3, column=0)
 initialization_algorithms_lst = ["Random", "Nearest neighbour algorithm"]
 initialization_algorithm = StringVar()
 initialization_algorithms_combobox = Combobox(parameters_frame,
@@ -100,20 +102,17 @@ initialization_algorithms_combobox.current(0)
 initialization_algorithms_combobox.grid(row=3, column=1)
 
 # Solving algorithms
-solving_algorithms_label = Label(parameters_frame, text="Solving algorithm :", bg=MAIN_BG_COL).grid(row=4, column=0)
+solving_algorithms_label = Label(parameters_frame, text="Solving algorithm :", bg=MAIN_BG_COL)
+solving_algorithms_label.grid(row=4, column=0)
 solving_algorithms_lst = ["2-opt", "Simulated annealing", "Brute-force search"]
 solving_algorithm = StringVar()
-solving_algorithms_combobox = Combobox(parameters_frame,
-                                       values=solving_algorithms_lst,
-                                       textvariable=solving_algorithm)
+solving_algorithms_combobox = Combobox(parameters_frame, values=solving_algorithms_lst, textvariable=solving_algorithm)
 solving_algorithms_combobox.current(0)
 solving_algorithms_combobox.grid(row=4, column=1)
 
 # Solve button
-solve_button = Button(parameters_frame, text="Solve", width=15, bg='limegreen', relief=GROOVE, command=solve).grid(row=5,
-                                                                                                    column=0,
-                                                                                                    columnspan=2,
-                                                                                                    pady=350)
+solve_button = Button(parameters_frame, text="Solve", width=15, bg='limegreen', relief=GROOVE, command=solve)
+solve_button.grid(row=5, column=0, columnspan=2, pady=350)
 
 # Graph
 fig = Figure(figsize=(5, 5), dpi=100)
