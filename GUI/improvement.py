@@ -11,8 +11,6 @@ root.minsize(800, 600)
 fig = Figure(figsize=(5, 5), dpi=100)
 new_plot = fig.add_subplot(111)
 canvas = FigureCanvasTkAgg(fig, master=root)
-toolbar = NavigationToolbar2Tk(canvas, root)
-toolbar.update()
 
 
 def new_random_plot():
@@ -27,5 +25,8 @@ def new_random_plot():
 parameters_frame = LabelFrame(root, text="Parameters", width=300, height=800, bg='white')
 parameters_frame.pack(side=RIGHT, expand=0, fill=Y)
 new_random_plot_button = Button(parameters_frame, text="New random plot", command=new_random_plot).pack()
+
+toolbar = NavigationToolbar2Tk(canvas, root)
+toolbar.update()
 
 root.mainloop()
