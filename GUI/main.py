@@ -3,7 +3,13 @@ from tkinter import messagebox
 from tkinter.ttk import Combobox
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
-from random import *
+from algorithms import *
+
+# style constants
+FONT = "Arial"
+H1 = 15
+H2 = 12
+MAIN_BG_COL = "white"
 
 root = Tk()
 root.title("TSP Solver")
@@ -11,63 +17,95 @@ root.iconbitmap('icon.ico')
 root.geometry("800x600")
 root.minsize(800, 600)
 
-global x, y
+
+class Vertex:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
 
 
-def new_random_plot():
-    x = [uniform(0, 10) for _ in range(50)]
-    y = [uniform(0, 10) for _ in range(50)]
-    new_plot.clear()
-    new_plot.scatter(x, y, c="black")
+n = 10
+
+
+def new_random_data():
+    vertices = []
+    x = [uniform(0, 10) for _ in range(n)]
+    y = [uniform(0, 10) for _ in range(n)]
+    for i in range(n):
+        vertices.append(Vertex(x[i], y[i]))
+    display(vertices)
+
+
+def display(path):
+    plot.clear()
+    for i in range(len(path) - 1):
+        plot.plot([path[i].x, path[i + 1].x], [path[i].y, path[i + 1].y], 'b')
+    for vertex in path:
+        plot.plot(vertex.x, vertex.y, 'bo')
     canvas.draw()
 
 
 def solve():
     # Initialisation process
-    if initialisation_algorithm.get() == "Random":
+    if initialization_algorithm.get() == "Random":
         print(1)
-    elif initialisation_algorithm.get() == "Nearest neighbour algorithm":
+    elif initialization_algorithm.get() == "Nearest neighbour algorithm":
         print(2)
     else:
         messagebox.showerror("Error", "The selected initialization algorithm is not valid")
 
 
 # Parameters
-parameters_frame = LabelFrame(root, text="Parameters", width=300, height=800, bg='white')
+parameters_frame = LabelFrame(root, width=300, height=800, bg=MAIN_BG_COL)
 parameters_frame.pack(side=RIGHT, expand=0, fill=Y)
 
 # Data
-data_label = Label(parameters_frame, text="Data", bg="white").pack()
-import_data_button = Button(parameters_frame, text="Import data").pack()
-new_random_plot_button = Button(parameters_frame, text="New random plot", command=new_random_plot).pack()
+data_label = Label(parameters_frame, text="1. Data", font=(FONT, H1), bg=MAIN_BG_COL).grid(row=0,
+                                                                                    column=0,
+                                                                                    padx=10,
+                                                                                    pady=10)
 
-# Initialisation algorithms
-initialisation_algorithms_label = Label(parameters_frame, text="Initialisation algorithm", bg="white").pack()
-initialisation_algorithms_lst = ["Random", "Nearest neighbour algorithm"]
-initialisation_algorithm = StringVar()
-initialisation_algorithms_combobox = Combobox(parameters_frame,
-                                              values=initialisation_algorithms_lst,
-                                              textvariable=initialisation_algorithm)
-initialisation_algorithms_combobox.current(0)
-initialisation_algorithms_combobox.pack()
+import_data_button = Button(parameters_frame, text="Import data").grid(row=1,
+                                                                       column=0,
+                                                                       columnspan=2,
+                                                                       padx=10,
+                                                                       pady=10)
+new_random_plot_button = Button(parameters_frame, text="New random data", command=new_random_data).grid(row=2,
+                                                                                                        column=0,
+                                                                                                        columnspan=2,
+                                                                                                        padx=10,
+                                                                                                        pady=10)
+
+# Initialization algorithms
+initialization_algorithms_label = Label(parameters_frame, text="Initialization algorithm :", bg="white").grid(row=3,
+                                                                                                              column=0)
+initialization_algorithms_lst = ["Random", "Nearest neighbour algorithm"]
+initialization_algorithm = StringVar()
+initialization_algorithms_combobox = Combobox(parameters_frame,
+                                              values=initialization_algorithms_lst,
+                                              textvariable=initialization_algorithm)
+initialization_algorithms_combobox.current(0)
+initialization_algorithms_combobox.grid(row=3, column=1)
 
 # Solving algorithms
-solving_algorithms_label = Label(parameters_frame, text="Solving algorithm", bg="white").pack()
+solving_algorithms_label = Label(parameters_frame, text="Solving algorithm :", bg="white").grid(row=4, column=0)
 solving_algorithms_lst = ["2-opt", "Simulated annealing", "Brute-force search"]
 solving_algorithm = StringVar()
 solving_algorithms_combobox = Combobox(parameters_frame,
                                        values=solving_algorithms_lst,
                                        textvariable=solving_algorithm)
 solving_algorithms_combobox.current(0)
-solving_algorithms_combobox.pack()
+solving_algorithms_combobox.grid(row=4, column=1)
 
 # Solve button
-solve_button = Button(parameters_frame, text="Solve", bg='limegreen', command=solve).pack()
+solve_button = Button(parameters_frame, text="Solve", width=15, bg='limegreen', command=solve).grid(row=5,
+                                                                                                    column=0,
+                                                                                                    columnspan=2,
+                                                                                                    pady=350)
 
 # Graph
-
 fig = Figure(figsize=(5, 5), dpi=100)
-new_plot = fig.add_subplot(111)
+plot = fig.add_subplot(111)
 canvas = FigureCanvasTkAgg(fig, master=root)
 toolbar = NavigationToolbar2Tk(canvas, root)
 toolbar.update()
