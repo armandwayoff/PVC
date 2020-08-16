@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+from tkinter import filedialog
 from tkinter.ttk import Combobox
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
@@ -25,6 +26,19 @@ class Vertex:
 
 
 n = 10
+
+
+def import_data():
+    def open():
+        root.filename = filedialog.askopenfilename()
+        import_data_page_label = Label(import_data_page, text="Selected file : " + str(root.filename)).pack()
+        quit_button = Button(import_data_page, text="OK", relief=GROOVE, command=import_data_page.destroy).pack()
+        import_data_page_button.config(text="Select new file")
+    import_data_page = Toplevel(root)
+    import_data_page.geometry("300x80")
+    import_data_page.resizable(False, False)
+    import_data_page.title("Import data")
+    import_data_page_button = Button(import_data_page, text="Select file", command=open, relief=GROOVE).pack()
 
 
 def new_random_data():
@@ -65,19 +79,19 @@ data_label = Label(parameters_frame, text="1. Data", font=(FONT, H1), bg=MAIN_BG
                                                                                     padx=10,
                                                                                     pady=10)
 
-import_data_button = Button(parameters_frame, text="Import data").grid(row=1,
+import_data_button = Button(parameters_frame, text="Import data", relief=GROOVE, command=import_data).grid(row=1,
                                                                        column=0,
                                                                        columnspan=2,
                                                                        padx=10,
                                                                        pady=10)
-new_random_plot_button = Button(parameters_frame, text="New random data", command=new_random_data).grid(row=2,
+new_random_plot_button = Button(parameters_frame, text="New random data", relief=GROOVE, command=new_random_data).grid(row=2,
                                                                                                         column=0,
                                                                                                         columnspan=2,
                                                                                                         padx=10,
                                                                                                         pady=10)
 
 # Initialization algorithms
-initialization_algorithms_label = Label(parameters_frame, text="Initialization algorithm :", bg="white").grid(row=3,
+initialization_algorithms_label = Label(parameters_frame, text="Initialization algorithm :", bg=MAIN_BG_COL).grid(row=3,
                                                                                                               column=0)
 initialization_algorithms_lst = ["Random", "Nearest neighbour algorithm"]
 initialization_algorithm = StringVar()
@@ -88,7 +102,7 @@ initialization_algorithms_combobox.current(0)
 initialization_algorithms_combobox.grid(row=3, column=1)
 
 # Solving algorithms
-solving_algorithms_label = Label(parameters_frame, text="Solving algorithm :", bg="white").grid(row=4, column=0)
+solving_algorithms_label = Label(parameters_frame, text="Solving algorithm :", bg=MAIN_BG_COL).grid(row=4, column=0)
 solving_algorithms_lst = ["2-opt", "Simulated annealing", "Brute-force search"]
 solving_algorithm = StringVar()
 solving_algorithms_combobox = Combobox(parameters_frame,
@@ -98,7 +112,7 @@ solving_algorithms_combobox.current(0)
 solving_algorithms_combobox.grid(row=4, column=1)
 
 # Solve button
-solve_button = Button(parameters_frame, text="Solve", width=15, bg='limegreen', command=solve).grid(row=5,
+solve_button = Button(parameters_frame, text="Solve", width=15, bg='limegreen', relief=GROOVE, command=solve).grid(row=5,
                                                                                                     column=0,
                                                                                                     columnspan=2,
                                                                                                     pady=350)
