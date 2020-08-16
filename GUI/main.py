@@ -33,8 +33,8 @@ def import_data():
         root.filename = filedialog.askopenfilename()
         import_data_page_label = Label(import_data_page, text="Selected file : " + str(root.filename)).pack()
         quit_button = Button(import_data_page, text="OK", relief=GROOVE, command=import_data_page.destroy).pack()
-        import_data_page_button.config(text="Select new file")
     import_data_page = Toplevel(root)
+    import_data_page.attributes("-topmost", "true")
     import_data_page.geometry("300x80")
     import_data_page.resizable(False, False)
     import_data_page.title("Import data")
@@ -74,10 +74,8 @@ parameters_frame = LabelFrame(root, width=300, height=800, bg=MAIN_BG_COL)
 parameters_frame.pack(side=RIGHT, expand=0, fill=Y)
 
 # Data
-data_label = Label(parameters_frame, text="1. Data", font=(FONT, H1), bg=MAIN_BG_COL).grid(row=0,
-                                                                                    column=0,
-                                                                                    padx=10,
-                                                                                    pady=10)
+data_label = Label(parameters_frame, text="Data", bg=MAIN_BG_COL).grid(row=0, column=0)
+
 
 import_data_button = Button(parameters_frame, text="Import data", relief=GROOVE, command=import_data).grid(row=1,
                                                                        column=0,
