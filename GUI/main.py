@@ -36,10 +36,11 @@ def import_data():
         quit_button.config(text="OK")
     # Create pop-up window
     import_data_page = Toplevel(root)
-    import_data_page.attributes("-topmost", "true")
+    import_data_page.title("Import data")
+    import_data_page.iconbitmap('icon.ico')
     import_data_page.geometry("300x80")
     import_data_page.resizable(True, False)
-    import_data_page.title("Import data")
+    import_data_page.attributes("-topmost", "true")
 
     import_data_page_button = Button(import_data_page, text="Select file", command=open_files, relief=GROOVE)
     import_data_page_button.pack()
