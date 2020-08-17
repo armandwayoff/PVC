@@ -19,7 +19,11 @@ root.minsize(800, 600)
 
 def open_files():
     root.filename = filedialog.askopenfilename()
-    label.config(text="Selected file : " + str(root.filename))
+    if len(root.filename) > 20:
+        file_name = str(root.filename[-20:])
+    else:
+        file_name = str(root.filename)
+    label.config(text="Selected file : " + file_name)
 
 
 # User frame
@@ -37,25 +41,25 @@ def data_button():
         button.config(text="Generate random data")
         label.config(text="Number of vertices :")
         spin = Spinbox(data_frame, from_=3, to=100, width=4)
-        spin.grid(row=3, column=1)
+        spin.grid(row=3, column=1, sticky=W)
 
 
 # Data frame
-data_frame = LabelFrame(user_frame, text="Data", width=250, height=100)
+data_frame = LabelFrame(user_frame, text="Data", width=215, height=100)
 data_frame.grid(row=0, column=0)
-data_frame.grid_propagate(0)
+data_frame.grid_propagate(1)
 
 data_mode = StringVar()
 import_data_button = Radiobutton(data_frame, text="Import data", width=10, relief=GROOVE, variable=data_mode, value="import-data", command=data_button)
-import_data_button.grid(row=1, column=0, padx=5, sticky=E)
+import_data_button.grid(row=1, column=0, sticky=NSEW)
 new_random_plot_button = Radiobutton(data_frame, text="Random data", width=10, relief=GROOVE, variable=data_mode, value="random-data", command=data_button)
-new_random_plot_button.grid(row=1, column=1, padx=5, sticky=NW)
+new_random_plot_button.grid(row=1, column=1, sticky=NSEW)
 import_data_button.select()
 
 button = Button(data_frame, text="Select file", relief=GROOVE, command=open_files)
-button.grid(row=2, column=0, columnspan=2)
+button.grid(row=2, column=0, columnspan=2, sticky=W+E)
 label = Label(data_frame, text="Selected file :")
-label.grid(row=3, column=0)
+label.grid(row=3, column=0, columnspan=2)
 
 # Graph frame
 fig = Figure(figsize=(5, 5), dpi=100)
