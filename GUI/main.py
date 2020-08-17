@@ -36,11 +36,11 @@ def import_data():
         quit_button.config(text="OK")
     # Create pop-up window
     import_data_page = Toplevel(root)
+    import_data_page.grab_set()
     import_data_page.title("Import data")
     import_data_page.iconbitmap('icon.ico')
     import_data_page.geometry("300x80")
     import_data_page.resizable(True, False)
-    import_data_page.attributes("-topmost", "true")
 
     import_data_page_button = Button(import_data_page, text="Select file", command=open_files, relief=GROOVE)
     import_data_page_button.pack()
@@ -71,9 +71,9 @@ def display(path):
 def solve():
     # Initialisation process
     if initialization_algorithm.get() == "Random":
-        print(1)
+        messagebox.askquestion("Validation", "Do you confirm the parameters ?")
     elif initialization_algorithm.get() == "Nearest neighbour algorithm":
-        print(2)
+        messagebox.askquestion("Validation", "Do you confirm the parameters ?")
     else:
         messagebox.showerror("Error", "The selected initialization algorithm is not valid")
 
@@ -83,13 +83,11 @@ parameters_frame = LabelFrame(root, width=300, height=800, bg=MAIN_BG_COL)
 parameters_frame.pack(side=RIGHT, expand=0, fill=Y)
 
 # Data
-data_label = Label(parameters_frame, text="Data", bg=MAIN_BG_COL)
-data_label.grid(row=0, column=0)
 
 import_data_button = Button(parameters_frame, text="Import data", relief=GROOVE, command=import_data)
-import_data_button.grid(row=1, column=0, columnspan=2, padx=10, pady=10)
-new_random_plot_button = Button(parameters_frame, text="New random data", relief=GROOVE, command=new_random_data)
-new_random_plot_button.grid(row=2, column=0, columnspan=2, padx=10, pady=10)
+import_data_button.grid(row=1, column=0, columnspan=1, padx=10, pady=10)
+new_random_plot_button = Button(parameters_frame, text="Random data", relief=GROOVE, command=new_random_data)
+new_random_plot_button.grid(row=1, column=1, columnspan=1, padx=10, pady=10)
 
 # Initialization algorithms
 initialization_algorithms_label = Label(parameters_frame, text="Initialization algorithm :", bg=MAIN_BG_COL)
