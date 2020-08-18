@@ -1,6 +1,5 @@
 """
  *- TSP SOLVER -*
-
  built by Armand WAYOFF
 """
 
@@ -19,10 +18,10 @@ root.minsize(800, 600)
 
 def open_files():
     root.filename = filedialog.askopenfilename()
-    if len(root.filename) > 20:
-        file_name = str(root.filename[-20:])
-    else:
-        file_name = str(root.filename)
+    max_length = 20
+    file_name = root.filename.split("/")[-1]
+    if len(file_name) > max_length:
+        file_name = "[...]" + file_name[-max_length:]
     label.config(text="Selected file : " + file_name)
 
 
