@@ -1,22 +1,44 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import filedialog
-from tkinter.ttk import Combobox
+from tkinter.ttk import Combobox, Notebook
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from algorithms import *
 
+
+class Plot:
+    def __init__(self, master):
+        fig = Figure(figsize=(5, 5), dpi=100)
+        self.plot = fig.add_subplot(111)
+        self.canvas = FigureCanvasTkAgg(fig, master=master)
+        self.toolbar = NavigationToolbar2Tk(self.canvas, master)
+        self.toolbar.update()
+        self.canvas.get_tk_widget().pack(side=LEFT, fill=BOTH, expand=TRUE)
+
+
+# Main window
 root = Tk()
 root.title("TSP Solver")
 root.iconbitmap('icon.ico')
 root.geometry("800x600")
 root.minsize(800, 600)
 
+# First plot
+first_plot = Plot(root)
+
+# Tabs
+windows = Notebook(root)
+windows.pack()
+
 
 class Vertex:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+
+
+vertices = []
 
 
 def new_random_data():
@@ -27,41 +49,37 @@ def new_random_data():
         except ValueError:
             return False
 
-    global vertices
-    vertices = []
     if is_int(spin.get()):
         number_vertices = int(spin.get())
         x = [uniform(0, 10) for _ in range(number_vertices)]
         y = [uniform(0, 10) for _ in range(number_vertices)]
         for i in range(number_vertices):
             vertices.append(Vertex(x[i], y[i]))
-        display_scatter(vertices)
+        display_scatter(first_plot, vertices)
     else:
         messagebox.showerror("Error", "Number of vertices is invalid")
 
 
-def display_scatter(population):
-    plot.clear()
+def display_scatter(plt, population):
+    plt.plot.clear()
     for vertex in population:
-        plot.plot(vertex.x, vertex.y, 'bo')
-    canvas.draw()
+        plt.plot.plot(vertex.x, vertex.y, 'bo')
+    plt.canvas.draw()
 
 
-def display_graph(population):
-    plot.clear()
+def display_graph(plt, population):
+    plt.plot.clear()
     for i in range(len(population) - 1):
-        plot.plot([population[i].x, population[i + 1].x], [population[i].y, population[i + 1].y], 'b')
+        plt.plot.plot([population[i].x, population[i + 1].x], [population[i].y, population[i + 1].y], 'b')
     for vertex in population:
-        plot.plot(vertex.x, vertex.y, 'bo')
-    canvas.draw()
+        plt.plot.plot(vertex.x, vertex.y, 'bo')
+    plt.canvas.draw()
 
 
 def open_files():
     root.filename = filedialog.askopenfilename()
     max_length = 20
     if len(root.filename) > 0:
-        plot.clear()
-        canvas.draw()
         button.config(text="Select new file")
         file_name = root.filename.split("/")[-1]
         if len(file_name) > max_length:
@@ -89,11 +107,11 @@ def solve():
     if init_alg.get() == "Random":
         messagebox.askquestion("Validation", "Do you confirm the parameters ?")
         init_path = vertices
-        display_graph(init_path)
+        display_graph(first_plot, init_path)
     elif init_alg.get() == "Nearest neighbour algorithm":
         messagebox.askquestion("Validation", "Do you confirm the parameters ?")
         init_path = nearest_neighbour(vertices, 0)
-        display_graph(init_path)
+        display_graph(first_plot, init_path)
     else:
         messagebox.showerror("Error", "Parameters are not valid")
 
@@ -146,11 +164,6 @@ solve_button = Button(user_frame, text="Solve", width=15, bg='limegreen', relief
 solve_button.grid(row=5, column=0, columnspan=2, pady=350)
 
 # Graph
-fig = Figure(figsize=(5, 5), dpi=100)
-plot = fig.add_subplot(111)
-canvas = FigureCanvasTkAgg(fig, master=root)
-toolbar = NavigationToolbar2Tk(canvas, root)
-toolbar.update()
-canvas.get_tk_widget().pack(side=LEFT, fill=BOTH, expand=TRUE)
+
 
 root.mainloop()
