@@ -24,26 +24,17 @@ class Vertex:
         self.y = y
 
 
-def import_data():
-    def open_files():
-        root.filename = filedialog.askopenfilename()
-        import_data_page_button.config(text="Select new file")
-        import_data_page_label.config(text="Selected file : " + str(root.filename))
-        quit_button.config(text="OK")
-    # Create pop-up window
-    import_data_page = Toplevel(root)
-    import_data_page.grab_set()
-    import_data_page.title("Import data")
-    import_data_page.iconbitmap('icon.ico')
-    import_data_page.geometry("300x80")
-    import_data_page.resizable(True, False)
-
-    import_data_page_button = Button(import_data_page, text="Select file", command=open_files, relief=GROOVE)
-    import_data_page_button.pack()
-    import_data_page_label = Label(import_data_page, text="")
-    import_data_page_label.pack()
-    quit_button = Button(import_data_page, text="Cancel", relief=GROOVE, command=import_data_page.destroy)
-    quit_button.pack()
+def open_files():
+    root.filename = filedialog.askopenfilename()
+    max_length = 20
+    if len(root.filename) > 0:
+        plot.clear()
+        canvas.draw()
+        button.config(text="Select new file")
+        file_name = root.filename.split("/")[-1]
+        if len(file_name) > max_length:
+            file_name = "[...]" + file_name[-max_length:]
+        label.config(text="Selected file : " + file_name)
 
 
 def is_int(n):
@@ -52,6 +43,7 @@ def is_int(n):
         return True
     except ValueError:
         return False
+
 
 def new_random_data():
     vertices = []
@@ -77,21 +69,20 @@ def display(path):
 
 def solve():
     # Initialisation process
-    if initialization_algorithm.get() == "Random":
+    if init_alg.get() == "Random":
         messagebox.askquestion("Validation", "Do you confirm the parameters ?")
-    elif initialization_algorithm.get() == "Nearest neighbour algorithm":
+    elif init_alg.get() == "Nearest neighbour algorithm":
         messagebox.askquestion("Validation", "Do you confirm the parameters ?")
     else:
-        messagebox.showerror("Error", "The selected initialization algorithm is not valid")
+        messagebox.showerror("Error", "Parameters are not valid")
 
 
-# Parameters
-parameters_frame = LabelFrame(root, width=300, height=800)
-parameters_frame.pack(side=RIGHT, expand=0, fill=Y)
+# User frame
+user_frame = LabelFrame(root, width=300, height=800)
+user_frame.pack(side=RIGHT, expand=0, fill=Y)
+
 
 # Data
-
-
 def info():
     info_page = Toplevel(root)
     info_page.grab_set()
@@ -103,54 +94,63 @@ def info():
     Label(info_page, text="The number of vertices is limited to 100.").pack()
     Button(info_page, text="Close", relief=GROOVE, command=info_page.destroy).pack(side=BOTTOM)
 
-def func():
-    global but
-    if var.get() == 1:
-        but.config(text="Select file")
-        but.config(command=import_data)
+
+def data_button():
+    global spin
+    if data_mode.get() == "import-data":
+        button.config(text="Select file")
+        button.config(command=open_files)
+        label.config(text="No selected file")
+        spin.grid_remove()
     else:
-        but.config(text="Generate random data")
-        but.config(command=new_random_data)
+        button.config(text="Generate random data")
+        button.config(command=new_random_data)
+        label.config(text="Number of vertices :")
+        spin = Spinbox(data_frame, from_=3, to=100, width=4)
+        spin.grid(row=3, column=1, sticky=E)
 
 
-data_frame = LabelFrame(parameters_frame, text="Data")
+# Data frame
+data_frame = LabelFrame(user_frame, text="Data", width=215, height=100)
 data_frame.grid(row=0, column=0)
-info_button = Button(data_frame, text="ℹ", bg="DodgerBlue", relief=GROOVE, command=info).grid(row=1, column=2)
-var = IntVar()
-import_data_button = Radiobutton(data_frame, text="Import data", relief=GROOVE, variable=var, value=1, command=func)
+data_frame.grid_propagate(1)
+
+# Radio buttons
+data_mode = StringVar()
+import_data_button = Radiobutton(data_frame, text="Import data", width=10, relief=GROOVE, variable=data_mode, value="import-data", command=data_button)
+import_data_button.grid(row=1, column=0, sticky=NSEW)
+new_random_plot_button = Radiobutton(data_frame, text="Random data", width=10, relief=GROOVE, variable=data_mode, value="random-data", command=data_button)
+new_random_plot_button.grid(row=1, column=1, sticky=NSEW)
 import_data_button.select()
-import_data_button.grid(row=1, column=0, columnspan=1, padx=10, pady=10)
-new_random_plot_button = Radiobutton(data_frame, text="Random data", relief=GROOVE, variable=var, value=2, command=func)
-new_random_plot_button.grid(row=1, column=1, columnspan=1, padx=10, pady=10)
-but = Button(data_frame, text="Select file", relief=GROOVE, command=import_data)
-but.grid(row=2, column=0)
-spin = Spinbox(data_frame, from_=3, to=100)
-spin.grid()
+
+button = Button(data_frame, text="Select file", relief=GROOVE, command=open_files)
+button.grid(row=2, column=0, columnspan=2, sticky=W+E)
+label = Label(data_frame, text="No selected file")
+label.grid(row=3, column=0, columnspan=2)
 
 # Initialization algorithms
-alg = LabelFrame(parameters_frame, text="Algs")
-alg.grid(row=1, column=0)
-initialization_algorithms_label = Label(alg, text="Initialization algorithm :")
-initialization_algorithms_label.grid(row=3, column=0)
-initialization_algorithms_lst = ["Random", "Nearest neighbour algorithm"]
-initialization_algorithm = StringVar()
-initialization_algorithms_combobox = Combobox(alg,
-                                              values=initialization_algorithms_lst,
-                                              textvariable=initialization_algorithm)
-initialization_algorithms_combobox.current(0)
-initialization_algorithms_combobox.grid(row=3, column=1)
+parameters_frame = LabelFrame(user_frame, text="Parameters")
+parameters_frame.grid(row=1, column=0)
+
+init_alg_label = Label(parameters_frame, text="Initialization algorithm :")
+init_alg_label.grid(row=3, column=0)
+init_alg_lst = ["Random", "Nearest neighbour algorithm"]
+init_alg = StringVar()
+init_alg_combobox = Combobox(parameters_frame, values=init_alg_lst, textvariable=init_alg)
+init_alg_combobox.current(0)
+init_alg_combobox.grid(row=3, column=1)
 
 # Solving algorithms
-solving_algorithms_label = Label(alg, text="Solving algorithm :")
-solving_algorithms_label.grid(row=4, column=0)
-solving_algorithms_lst = ["2-opt", "Simulated annealing", "Brute-force search"]
-solving_algorithm = StringVar()
-solving_algorithms_combobox = Combobox(alg, values=solving_algorithms_lst, textvariable=solving_algorithm)
-solving_algorithms_combobox.current(0)
-solving_algorithms_combobox.grid(row=4, column=1)
+solving_alg_label = Label(parameters_frame, text="Solving algorithm :")
+solving_alg_label.grid(row=4, column=0)
+solving_alg_lst = ["2-opt", "Simulated annealing", "Brute-force search"]
+solving_alg = StringVar()
+solving_alg_combobox = Combobox(parameters_frame, values=solving_alg_lst, textvariable=solving_alg)
+solving_alg_combobox.current(0)
+solving_alg_combobox.grid(row=4, column=1)
 
 # Solve button
-solve_button = Button(parameters_frame, text="Solve", width=15, bg='limegreen', relief=GROOVE, command=solve)
+solve_button = Button(user_frame, text="Solve", width=15, bg='limegreen', relief=GROOVE, command=solve)
 solve_button.grid(row=5, column=0, columnspan=2, pady=350)
 
 # Graph
