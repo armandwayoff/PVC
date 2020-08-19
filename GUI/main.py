@@ -43,7 +43,6 @@ class Vertex:
         self.y = y
 
 
-vertices = []
 
 
 def new_random_data():
@@ -54,6 +53,8 @@ def new_random_data():
         except ValueError:
             return False
 
+    global vertices
+    vertices = []
     if is_int(spin.get()):
         number_vertices = int(spin.get())
         x = [uniform(0, 10) for _ in range(number_vertices)]
