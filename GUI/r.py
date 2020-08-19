@@ -19,10 +19,12 @@ root.minsize(800, 600)
 def open_files():
     root.filename = filedialog.askopenfilename()
     max_length = 20
-    file_name = root.filename.split("/")[-1]
-    if len(file_name) > max_length:
-        file_name = "[...]" + file_name[-max_length:]
-    label.config(text="Selected file : " + file_name)
+    if len(root.filename) > 0:
+        button.config(text="Select new file")
+        file_name = root.filename.split("/")[-1]
+        if len(file_name) > max_length:
+            file_name = "[...]" + file_name[-max_length:]
+        label.config(text="Selected file : " + file_name)
 
 
 # User frame
@@ -35,7 +37,7 @@ def data_button():
     if data_mode.get() == "import-data":
         button.config(text="Select file")
         button.config(command=open_files)
-        label.config(text="Selected file :")
+        label.config(text="No selected file")
         spin.grid_remove()
     else:
         button.config(text="Generate random data")
@@ -58,7 +60,7 @@ import_data_button.select()
 
 button = Button(data_frame, text="Select file", relief=GROOVE, command=open_files)
 button.grid(row=2, column=0, columnspan=2, sticky=W+E)
-label = Label(data_frame, text="Selected file :")
+label = Label(data_frame, text="No selected file")
 label.grid(row=3, column=0, columnspan=2)
 
 # Graph frame
