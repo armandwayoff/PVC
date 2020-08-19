@@ -25,12 +25,18 @@ root.geometry("800x600")
 root.minsize(800, 600)
 
 # First plot
-first_plot = Plot(root)
 
 # Tabs
 windows = Notebook(root)
-windows.pack()
-
+windows.pack(side=LEFT, fill=BOTH, expand=TRUE)
+f1 = Frame(windows)
+f1.pack(side=LEFT, fill=BOTH, expand=TRUE)
+first_plot = Plot(f1)
+f2 = Frame(windows)
+f2.pack(side=LEFT, fill=BOTH, expand=TRUE)
+second_plot = Plot(f2)
+windows.add(f1, text="Initialization path")
+windows.add(f2, text="Solution")
 
 class Vertex:
     def __init__(self, x, y):
