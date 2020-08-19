@@ -29,6 +29,7 @@ def open_files():
 user_frame = LabelFrame(root, width=300, height=800, padx=10, pady=10)
 user_frame.pack(side=RIGHT, expand=0, fill=Y)
 
+
 def data_button():
     global spin
     if data_mode.get() == "import-data":
@@ -40,7 +41,7 @@ def data_button():
         button.config(text="Generate random data")
         label.config(text="Number of vertices :")
         spin = Spinbox(data_frame, from_=3, to=100, width=4)
-        spin.grid(row=3, column=1, sticky=W)
+        spin.grid(row=3, column=1, sticky=E)
 
 
 # Data frame
