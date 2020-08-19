@@ -24,7 +24,6 @@ root.iconbitmap('icon.ico')
 root.geometry("800x600")
 root.minsize(800, 600)
 
-# First plot
 
 # Tabs
 windows = Notebook(root)
@@ -110,6 +109,7 @@ def data_button():
 
 def solve():
     # Initialisation process
+    global init_path
     if init_alg.get() == "Random":
         messagebox.askquestion("Validation", "Do you confirm the parameters ?")
         init_path = vertices
@@ -120,6 +120,8 @@ def solve():
         display_graph(first_plot, init_path)
     else:
         messagebox.showerror("Error", "Parameters are not valid")
+    sol = two_opt(init_path, 10 ** 4)
+    display_graph(second_plot, sol)
 
 
 # User frame
@@ -167,9 +169,6 @@ solving_alg_combobox.grid(row=4, column=1)
 
 # Solve button
 solve_button = Button(user_frame, text="Solve", width=15, bg='limegreen', relief=GROOVE, command=solve)
-solve_button.grid(row=5, column=0, columnspan=2, pady=350)
-
-# Graph
-
+solve_button.grid(row=5, column=0, columnspan=2)
 
 root.mainloop()
