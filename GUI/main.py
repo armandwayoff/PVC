@@ -6,11 +6,6 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from algorithms import *
 
-# style constants
-FONT = "Arial"
-H1 = 15
-H2 = 12
-
 root = Tk()
 root.title("TSP Solver")
 root.iconbitmap('icon.ico')
@@ -24,6 +19,43 @@ class Vertex:
         self.y = y
 
 
+def new_random_data():
+    def is_int(n):
+        try:
+            int(n)
+            return True
+        except ValueError:
+            return False
+
+    global vertices
+    vertices = []
+    if is_int(spin.get()):
+        number_vertices = int(spin.get())
+        x = [uniform(0, 10) for _ in range(number_vertices)]
+        y = [uniform(0, 10) for _ in range(number_vertices)]
+        for i in range(number_vertices):
+            vertices.append(Vertex(x[i], y[i]))
+        display_scatter(vertices)
+    else:
+        messagebox.showerror("Error", "Number of vertices is invalid")
+
+
+def display_scatter(population):
+    plot.clear()
+    for vertex in population:
+        plot.plot(vertex.x, vertex.y, 'bo')
+    canvas.draw()
+
+
+def display_graph(population):
+    plot.clear()
+    for i in range(len(population) - 1):
+        plot.plot([population[i].x, population[i + 1].x], [population[i].y, population[i + 1].y], 'b')
+    for vertex in population:
+        plot.plot(vertex.x, vertex.y, 'bo')
+    canvas.draw()
+
+
 def open_files():
     root.filename = filedialog.askopenfilename()
     max_length = 20
@@ -35,64 +67,6 @@ def open_files():
         if len(file_name) > max_length:
             file_name = "[...]" + file_name[-max_length:]
         label.config(text="Selected file : " + file_name)
-
-
-def is_int(n):
-    try:
-        int(n)
-        return True
-    except ValueError:
-        return False
-
-
-def new_random_data():
-    vertices = []
-    if is_int(spin.get()):
-        number_vertices = int(spin.get())
-        x = [uniform(0, 10) for _ in range(number_vertices)]
-        y = [uniform(0, 10) for _ in range(number_vertices)]
-        for i in range(number_vertices):
-            vertices.append(Vertex(x[i], y[i]))
-        display(vertices)
-    else:
-        messagebox.showerror("Error", "Number of vertices is invalid")
-
-
-def display(path):
-    plot.clear()
-    #for i in range(len(path) - 1):
-    #    plot.plot([path[i].x, path[i + 1].x], [path[i].y, path[i + 1].y], 'b')
-    for vertex in path:
-        plot.plot(vertex.x, vertex.y, 'bo')
-    canvas.draw()
-
-
-def solve():
-    # Initialisation process
-    if init_alg.get() == "Random":
-        messagebox.askquestion("Validation", "Do you confirm the parameters ?")
-    elif init_alg.get() == "Nearest neighbour algorithm":
-        messagebox.askquestion("Validation", "Do you confirm the parameters ?")
-    else:
-        messagebox.showerror("Error", "Parameters are not valid")
-
-
-# User frame
-user_frame = LabelFrame(root, width=300, height=800)
-user_frame.pack(side=RIGHT, expand=0, fill=Y)
-
-
-# Data
-def info():
-    info_page = Toplevel(root)
-    info_page.grab_set()
-    info_page.title("Info")
-    info_page.iconbitmap('icon.ico')
-    info_page.geometry("300x80")
-    info_page.resizable(False, False)
-
-    Label(info_page, text="The number of vertices is limited to 100.").pack()
-    Button(info_page, text="Close", relief=GROOVE, command=info_page.destroy).pack(side=BOTTOM)
 
 
 def data_button():
@@ -109,6 +83,24 @@ def data_button():
         spin = Spinbox(data_frame, from_=3, to=100, width=4)
         spin.grid(row=3, column=1, sticky=E)
 
+
+def solve():
+    # Initialisation process
+    if init_alg.get() == "Random":
+        messagebox.askquestion("Validation", "Do you confirm the parameters ?")
+        init_path = vertices
+        display_graph(init_path)
+    elif init_alg.get() == "Nearest neighbour algorithm":
+        messagebox.askquestion("Validation", "Do you confirm the parameters ?")
+        init_path = nearest_neighbour(vertices, 0)
+        display_graph(init_path)
+    else:
+        messagebox.showerror("Error", "Parameters are not valid")
+
+
+# User frame
+user_frame = LabelFrame(root, width=300, height=800)
+user_frame.pack(side=RIGHT, expand=0, fill=Y)
 
 # Data frame
 data_frame = LabelFrame(user_frame, text="Data", width=215, height=100)
