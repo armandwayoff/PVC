@@ -18,7 +18,7 @@
 
 ## About the Project
 
-The aim of this project is to present the problem of the commercial traveller as well as different resolution algorithms. 
+*"Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once and returns to the origin city?"*
 
 ![what's tsp](illustration_images/what's_tsp.png)
 
